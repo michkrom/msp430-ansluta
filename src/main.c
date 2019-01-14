@@ -66,9 +66,11 @@ note - since the P1.6 and P1.7 are swapped (hw desin error likely) we cannot use
  */
 int main(void)
 {
-    WDTCTL  = WDTPW + WDTHOLD; 	// Stop WDT
-	BCSCTL1 = CALBC1_1MHZ;      // Set DCO
-  	DCOCTL  = CALDCO_1MHZ;
+    WDTCTL  = WDTPW + WDTHOLD; 	// Stop WDT 0x5a80
+	BCSCTL1 = CALBC1_1MHZ;      // original MOV.B   #0xcc,  &0x0057  ; BCSCTL1
+  	DCOCTL  = CALDCO_1MHZ;      // original MOV.B   #0x68,  &0x0056  ; DCOCTL
+  	BCSCTL3 |= 0x20;            // XT2S=0 LFXT1Sx=VLOCLK
+  	
 
 	P1DIR = P_LED|P_CS|P_SCLK|P_MOSI; // P1DIR 0x65=01100101 --> 6,5,2,0 out (P1.0 led; P1.2=CS; P1.5=SCLK, P1.6=SI)
 	P1SEL = 0; // select special io functions - normal io

@@ -92,47 +92,52 @@
     0f902: 3a 41                     POP     R10
     0f904: 30 41                     RET
 
-0xf906:     
-    0f906: b2 40 80 5a 20 01         MOV     #0x5a80, &0x0120
-    0f90c: f2 40 cc 00 57 00         MOV.B   #0xcc,  &0x0057
-    0f912: f2 40 68 00 56 00         MOV.B   #0x68,  &0x0056
-    0f918: f2 d0 20 00 53 00         BIS.B   #0x20,  &0x0053
+main:     
+    0f906: b2 40 80 5a 20 01         MOV     #0x5a80, &0x0120 ; WDTCTL
+    0f90c: f2 40 cc 00 57 00         MOV.B   #0xcc,  &0x0057  ; BCSCTL1
+    0f912: f2 40 68 00 56 00         MOV.B   #0x68,  &0x0056  ; DCOCTL
+    0f918: f2 d0 20 00 53 00         BIS.B   #0x20,  &0x0053  ; BCSCTL3
     0f91e: 4c 43                     CLR.B   R12
-    ; send message
+    
+    ; send message 6 bytes
     0f920: 3d 40 00 02               MOV     #0x0200, R13
     0f924: 7e 40 06 00               MOV.B   #0x06,  R14
     0f928: b0 12 74 fb               CALL    #0xfb74
-    0f92c: 0e 43                     CLR     R14
+    ; check if message buffer is initialized to 55 xx xx xx xx aa
+    0f92c: 0e 43                     CLR     R14 ; R14=0
     0f92e: f2 90 55 00 00 02         CMP.B   #0x55,  &0x0200
     0f934: 01 24                     JZ      0xf938
-    0f936: 1e 43                     MOV     #0x0001, R14
-    0f938: 0f 43                     CLR     R15
+    0f936: 1e 43                     MOV     #0x0001, R14 ; R14=1 if (*0x0200!=0x55)
+    0f938: 0f 43                     CLR     R15 ; R15=0
     0f93a: f2 90 aa 00 05 02         CMP.B   #0xaa,  &0x0205
     0f940: 01 24                     JZ      0xf944
-    0f942: 1f 43                     MOV     #0x0001, R15
+    0f942: 1f 43                     MOV     #0x0001, R15 ; R15=1 if (*0x0205!=0xaa)
     0f944: 0e df                     BIS     R15,    R14
     0f946: 0e 93                     TST     R14
-    0f948: 1a 24                     JZ      0xf97e
+    0f948: 1a 24                     JZ      0xf97e ; end
     0f94a: 5e 43                     MOV.B   #0x01,  R14
     0f94c: 6e 92                     CMP.B   #0x04,  R14
-    0f94e: 08 2c                     JC      0xf960
+    0f94e: 08 2c                     JC      0xf960 ; skip randomization with ADC of first 4 bytes
+loop:
     0f950: b0 12 3a fb               CALL    #0xfb3a ; read ADC on pin A1
     0f954: 4f 4e                     MOV.B   R14,    R15
     0f956: cf 4c 00 02               MOV.B   R12,    0x0200(R15)
     0f95a: 5e 53                     INC.B   R14
     0f95c: 6e 92                     CMP.B   #0x04,  R14
-    0f95e: f8 2b                     JNC     0xf950
+    0f95e: f8 2b                     JNC     0xf950 ; loop while(R14 < 4)
+skip:
     0f960: f2 40 55 00 00 02         MOV.B   #0x55,  &0x0200
     0f966: d2 43 01 02               MOV.B   #0x01,  &0x0201
     0f96a: f2 40 aa 00 05 02         MOV.B   #0xaa,  &0x0205
     0f970: 4c 43                     CLR.B   R12
     0f972: 3d 40 00 02               MOV     #0x0200, R13
     0f976: 7e 40 06 00               MOV.B   #0x06,  R14
-    0f97a: b0 12 84 f9               CALL    #0xf984
+    0f97a: b0 12 84 f9               CALL    #0xf984 ; flash_write
+end:
     0f97e: d2 43 01 02               MOV.B   #0x01,  &0x0201
     0f982: 30 41                     RET 
     
-0xf984:
+flash_write:
     0f984: 0a 12                     PUSH    R10
     0f986: 09 12                     PUSH    R9
     0f988: 4b 4e                     MOV.B   R14,    R11
@@ -144,17 +149,18 @@
     0f996: 32 c2                     DINT    
     0f998: 03 43                     NOP     
     0f99a: 39 40 40 10               MOV     #0x1040, R9
-    0f99e: 92 b3 2c 01               BIT     #0x0001, &0x012c
+    0f99e: 92 b3 2c 01               BIT     #0x0001, &0x012c ; FCTL3 Busy Bit
     0f9a2: fd 23                     JNZ     0xf99e
-    0f9a4: b2 40 42 a5 2a 01         MOV     #0xa542, &0x012a
-    0f9aa: b2 40 02 a5 28 01         MOV     #0xa502, &0x0128
-    0f9b0: b2 40 00 a5 2c 01         MOV     #0xa500, &0x012c
-    0f9b6: c9 43 00 00               CLR.B   0x0000(R9)
-    0f9ba: b2 40 40 a5 28 01         MOV     #0xa540, &0x0128
+    0f9a4: b2 40 42 a5 2a 01         MOV     #0xa542, &0x012a ; FCTL2 FSSEL=MCLK FN=2
+    0f9aa: b2 40 02 a5 28 01         MOV     #0xa502, &0x0128 ; FCTL1 ERA
+    0f9b0: b2 40 00 a5 2c 01         MOV     #0xa500, &0x012c ; FCTL3 0
+    0f9b6: c9 43 00 00               CLR.B   0x0000(R9) ; ? 0 -> 0x1040
+    0f9ba: b2 40 40 a5 28 01         MOV     #0xa540, &0x0128 ; FCTL1 WRT
     0f9c0: 0b 43                     CLR     R11
     0f9c2: 4f 4e                     MOV.B   R14,    R15
     0f9c4: 0b 9f                     CMP     R15,    R11
-    0f9c6: 0b 2c                     JC      0xf9de
+    0f9c6: 0b 2c                     JC      0xf9de ; end
+loop:
     0f9c8: 0a 4b                     MOV     R11,    R10
     0f9ca: 0a 5d                     ADD     R13,    R10
     0f9cc: 4f 4c                     MOV.B   R12,    R15
@@ -164,11 +170,12 @@
     0f9d6: 1b 53                     INC     R11
     0f9d8: 4f 4e                     MOV.B   R14,    R15
     0f9da: 0b 9f                     CMP     R15,    R11
-    0f9dc: f5 2b                     JNC     0xf9c8
+    0f9dc: f5 2b                     JNC     0xf9c8 ; loop
+end:    
     0f9de: b2 40 00 a5 28 01         MOV     #0xa500, &0x0128
     0f9e4: b2 40 10 a5 2c 01         MOV     #0xa510, &0x012c
     0f9ea: 32 d2                     EINT    
-    0f9ec: 30 40 5a fd               BR      #0xfd5a
+    0f9ec: 30 40 5a fd               BR      #0xfd5a ; pop r9 r10 return
 
 init_segment_initializers_if_any:    
     0f9f0: 0a 12                     PUSH    R10
@@ -203,8 +210,9 @@ init_segment_initializers_if_any:
     0fa42: 8f 12                     CALL    R15
     0fa44: 3a 90 00 00               TST     R10
     0fa48: fb 23                     JNZ     0xfa40
-    0fa4a: 30 40 5a fd               BR      #0xfd5a
-    
+    0fa4a: 30 40 5a fd               BR      #0xfd5a ; pop r9 r10 return
+
+cc2500_wakeup:
     0fa4e: e2 d2 21 00               BIS.B   #0x04,  &0x0021 ; CS=1
     0fa52: f2 f0 df 00 21 00         AND.B   #0xdf,  &0x0021 ; SCK=0
     0fa58: f2 f0 bf 00 21 00         AND.B   #0xbf,  &0x0021 ; SI=0 (pullup)
@@ -275,16 +283,16 @@ int_p2: ; key press interrupt
     0faf8: 0b 12                     PUSH    R11
     0fafa: c2 43 2b 00               CLR.B   &0x002b ; P2IFG - interrupt flags
     0fafe: b1 c0 d0 00 0a 00         BIC     #0x00d0, 0x000a(SP) ; what does this do? where is SP? appears to clear bits
-    0fb04: b2 b0 10 00 08 02         BIT     #0x0010, &0x0208 ; ? (0x208) ram
+    0fb04: b2 b0 10 00 08 02         BIT     #0x0010, &0x0208 ; ? (0x208) ram (should init cc2500?)
     0fb0a: 09 20                     JNZ     0xfb1e ; go
     0fb0c: 7c 40 33 00               MOV.B   #0x33,  R12
     0fb10: b0 12 12 fd               CALL    #0xfd12 ; write one byte to cc2500 (0x33)
-    0fb14: b0 12 48 fc               CALL    #0xfc48
-    0fb18: b2 d0 10 00 08 02         BIS     #0x0010, &0x0208
+    0fb14: b0 12 48 fc               CALL    #0xfc48 ; send init data tp cc250
+    0fb18: b2 d0 10 00 08 02         BIS     #0x0010, &0x0208 ; state update
 _go:
-    0fb1e: f2 d0 48 00 27 00         BIS.B   #0x48,  &0x0027
-    0fb24: b2 c2 08 02               BIC     #0x0008, &0x0208
-    0fb28: b2 40 d0 02 60 01         MOV     #0x02d0, &0x0160
+    0fb1e: f2 d0 48 00 27 00         BIS.B   #0x48,  &0x0027  ; P1REN 
+    0fb24: b2 c2 08 02               BIC     #0x0008, &0x0208 ; state update
+    0fb28: b2 40 d0 02 60 01         MOV     #0x02d0, &0x0160 ; TACTL TASSEL=SMCLK IDx=3 (/8) MCx=1 (up)
     0fb2e: 3b 41                     POP     R11
     0fb30: 3c 41                     POP     R12
     0fb32: 3d 41                     POP     R13
@@ -292,7 +300,7 @@ _go:
     0fb36: 3f 41                     POP     R15
     0fb38: 00 13                     RETI
 
-adc_read:
+adc_read: ; this appeart to be a randomizer as it uses only lowest ADC bit
     0fb3a: b2 40 70 18 b0 01         MOV     #0x1870, &0x01b0 ; ADC10CTL0 
     0fb40: b2 40 00 10 b2 01         MOV     #0x1000, &0x01b2 ; ADC10CTL1 select input A1
     0fb46: e2 d3 4a 00               BIS.B   #0x02,   &0x004a ; ADC10AE0 enable analog input A1
@@ -304,7 +312,7 @@ loop:
     0fb56: 92 d3 b0 01               BIS     #0x0001, &0x01b0 ; ADC10CTL0
     0fb5a: 92 b3 b2 01               BIT     #0x0001, &0x01b2 ; ADC10CTL1
     0fb5e: fd 23                     JNZ     0xfb5a ; while(ADC10CTL1&1==1)
-    0fb60: 92 b3 b4 01               BIT     #0x0001, &0x01b4 ; ADC10MEM
+    0fb60: 92 b3 b4 01               BIT     #0x0001, &0x01b4 ; ADC10MEM but use only bit 0
     0fb64: 01 24                     JZ      0xfb68
     0fb66: 5c d3                     BIS.B   #0x01,  R12
     0fb68: 4c 5c                     RLA.B   R12
@@ -313,7 +321,8 @@ loop:
 end:
     0fb6e: a2 c3 b0 01               BIC     #0x0002, &0x01b0
     0fb72: 30 41                     RET ; R12 result
-         
+
+foo(R12,R13=addr,R14=len)
     0fb74: 0a 12                     PUSH    R10
     0fb76: 09 12                     PUSH    R9
     0fb78: 4b 4e                     MOV.B   R14,    R11
@@ -321,12 +330,13 @@ end:
     0fb7e: 0f 8b                     SUB     R11,    R15
     0fb80: 4b 4c                     MOV.B   R12,    R11
     0fb82: 0b 9f                     CMP     R15,    R11
-    0fb84: 11 34                     JGE     0xfba8
+    0fb84: 11 34                     JGE     0xfba8 ; exit
     0fb86: 3a 40 40 10               MOV     #0x1040, R10
     0fb8a: 0b 43                     CLR     R11
     0fb8c: 4f 4e                     MOV.B   R14,    R15
     0fb8e: 0b 9f                     CMP     R15,    R11
-    0fb90: 0b 2c                     JC      0xfba8
+    0fb90: 0b 2c                     JC      0xfba8 ; exit
+loop:    
     0fb92: 4f 4c                     MOV.B   R12,    R15
     0fb94: 0f 5b                     ADD     R11,    R15
     0fb96: 0f 5a                     ADD     R10,    R15
@@ -336,8 +346,9 @@ end:
     0fba0: 1b 53                     INC     R11
     0fba2: 4f 4e                     MOV.B   R14,    R15
     0fba4: 0b 9f                     CMP     R15,    R11
-    0fba6: f5 2b                     JNC     0xfb92
-    0fba8: 30 40 5a fd               BR      #0xfd5a
+    0fba6: f5 2b                     JNC     0xfb92 ; loop
+exit:    
+    0fba8: 30 40 5a fd               BR      #0xfd5a ; pop r9 r10 return
 
 ; initialize pins    
     0fbac: d2 43 21 00               MOV.B   #0x01,  &0x0021 ; P1OUT
@@ -354,8 +365,9 @@ end:
     0fbe2: 30 41                     RET
          
 ; transfer byte to CC2500 (bitbanging)
-         ; R15 - bit count
+void write_byte(uint8_t byte):
          ; R12 - byte to transfer, MSB first
+         ; R15 - bit count
          
     0fbe4: 0f 43                     CLR     R15
     
@@ -380,38 +392,34 @@ _fc04:
 _fc12:    
     0fc12: f2 f0 df 00 21 00         AND.B   #0xdf,  &0x0021 ; SCLK=0
     0fc18: 30 41                     RET
-         
-    0fc1a: b0 12 4e fa               CALL    #0xfa4e
+
+cc2500_restore:
+    0fc1a: b0 12 4e fa               CALL    #0xfa4e ; cc2500_wake_up
     0fc1e: b0 12 a0 fc               CALL    #0xfca0 ; cc2500_initialize_registers
-    0fc22: b0 12 48 fc               CALL    #0xfc48
+    0fc22: b0 12 48 fc               CALL    #0xfc48 ; cc2500_send_init_data
     0fc26: 7c 40 3b 00               MOV.B   #0x3b,  R12
-    0fc2a: b0 12 12 fd               CALL    #0xfd12
+    0fc2a: b0 12 12 fd               CALL    #0xfd12 ; write byte
     0fc2e: 7c 40 3a 00               MOV.B   #0x3a,  R12
-    0fc32: b0 12 12 fd               CALL    #0xfd12
+    0fc32: b0 12 12 fd               CALL    #0xfd12 ; write byte
     0fc36: 7c 40 33 00               MOV.B   #0x33,  R12
-    0fc3a: b0 12 12 fd               CALL    #0xfd12
+    0fc3a: b0 12 12 fd               CALL    #0xfd12 ; write byte
     0fc3e: 7c 40 36 00               MOV.B   #0x36,  R12
-    0fc42: b0 12 12 fd               CALL    #0xfd12
-    0fc46: 30 41                     RET     
+    0fc42: b0 12 12 fd               CALL    #0xfd12 ; write byte
+    0fc46: 30 41                     RET
 
-; send data1 to CC2500
+; send data to CC2500
 
-cc2500_send_message:
+cc2500_send_init_data_fdba():
     0fc48: e2 c2 21 00               BIC.B   #0x04,  &0x0021 ; P1.2=0 SCS=0
 wait_for_cc2500:
     0fc4c: f2 b0 80 ff 20 00         BIT.B   #0x80,  &0x0020 ; P1.7 (SO=0)
-    0fc52: fc 23                     JNZ     0xfc4c ; wait for cc2500 to assert SO
-    
-    0fc54: 7c 40 7e 00               MOV.B   #0x7e,  R12 ; R12 is byte to transfer 0x7e
+    0fc52: fc 23                     JNZ     0xfc4c ; wait for cc2500 to assert SO    
+    0fc54: 7c 40 7e 00               MOV.B   #0x7e,  R12 ; byte to transfer 0x7e
     0fc58: b0 12 e4 fb               CALL    #0xfbe4 ; transfer byte to CC250
-
-    0fc5c: 0e 43                     CLR     R14 ; R14 is counter of writes
-    
-    0fc5e: 3e 92                     CMP     #0x0008, R14 ; 8 regs to write
+    0fc5c: 0e 43                     CLR     R14 ; R14 is counter of writes    
+    0fc5e: 3e 92                     CMP     #0x0008, R14 ; 8 bytes to write
     0fc60: 07 2c                     JC      0xfc70    
-
 ;   load and transfer 8 bytes from 0xfdba: fe 00 00 00 00 00 00 00 
-
 loop:
     0fc62: 5c 4e ba fd               MOV.B   0xfdba(R14), R12
     0fc66: b0 12 e4 fb               CALL    #0xfbe4    ; write byte
@@ -461,10 +469,10 @@ wait_for_so:
     0fcd6: e2 d2 21 00               BIS.B   #0x04,  &0x0021
     0fcda: 30 41                     RET
 
-    0fcdc: b0 12 06 f9               CALL    #0xf906
+    0fcdc: b0 12 06 f9               CALL    #0xf906 ; main_init
     0fce0: b0 12 ac fb               CALL    #0xfbac
     0fce4: b0 12 28 fd               CALL    #0xfd28
-    0fce8: b0 12 1a fc               CALL    #0xfc1a ; init (including cc2500)
+    0fce8: b0 12 1a fc               CALL    #0xfc1a ; cc2500 init wake
     0fcec: 32 d2                     EINT    
     
 loop:    
@@ -472,7 +480,7 @@ loop:
     0fcf2: b0 12 76 fc               CALL    #0xfc76 ; got to sleep
     0fcf6: fb 3f                     JMP     0xfcee ; loop
 
-main:
+reset:
     0fcf8: 31 40 7e 02               MOV     #0x027e, SP
     0fcfc: b0 12 78 fd               CALL    #0xfd78 ; is_initialized() retuns 1 always
     0fd00: 0c 93                     TST     R12
@@ -481,8 +489,8 @@ main:
     0fd04: b0 12 f0 f9               CALL    #0xf9f0 ; call data initializers if any 
     
     0fd08: 0c 43                     CLR     R12
-    0fd0a: b0 12 dc fc               CALL    #0xfcdc ; init
-    0fd0e: b0 12 7c fd               CALL    #0xfd7c
+    0fd0a: b0 12 dc fc               CALL    #0xfcdc ; main
+    0fd0e: b0 12 7c fd               CALL    #0xfd7c ; hang_infinite
     
 ; called here from P2 interrupt - cc2500 waits for SO->0
 cc2500_write_one: ; CS and write one byte
@@ -493,9 +501,10 @@ cc2500_write_one: ; CS and write one byte
     0fd22: e2 d2 21 00               BIS.B   #0x04,  &0x0021 ; SCS=1
     0fd26: 30 41                     RET
 
-    0fd28: b2 40 10 00 62 01         MOV     #0x0010, &0x0162
-    0fd2e: b2 40 10 27 72 01         MOV     #0x2710, &0x0172
-    0fd34: b2 40 d0 02 60 01         MOV     #0x02d0, &0x0160
+init_timer:
+    0fd28: b2 40 10 00 62 01         MOV     #0x0010, &0x0162 ; TACCTL0
+    0fd2e: b2 40 10 27 72 01         MOV     #0x2710, &0x0172 ; TACCR0
+    0fd34: b2 40 d0 02 60 01         MOV     #0x02d0, &0x0160 ; TACTL 
     0fd3a: 30 41                     RET
     
 init_zero_data: ; (R12=&table; R13=&addr)
@@ -514,15 +523,18 @@ loop:
     0fd54: 36 41                     POP     R6
     0fd56: 37 41                     POP     R7
     0fd58: 38 41                     POP     R8
+return:    
     0fd5a: 39 41                     POP     R9
     0fd5c: 3a 41                     POP     R10
     0fd5e: 30 41                     RET
      
     ; P1 interrupt    
+int_P1:    
     0fd60: b1 c0 d0 00 00 00         BIC     #0x00d0, 0x0000(SP)
-    0fd66: c2 43 23 00               CLR.B   &0x0023
+    0fd66: c2 43 23 00               CLR.B   &0x0023 ; P1IFG
     0fd6a: 00 13                     RETI
-        
+
+int_timer0:
     0fd6c: b1 c0 10 00 00 00         BIC     #0x0010, 0x0000(SP)
     0fd72: d2 d3 0e 02               BIS.B   #0x01,  &0x020e
     0fd76: 00 13                     RETI
@@ -530,9 +542,12 @@ loop:
 is_initialized:    // aka int16_t is_initialized() { return 1; }
     0fd78: 1c 43                     MOV     #0x0001, R12
     0fd7a: 30 41                     RET
-         
+
+hang_infinite:
     0fd7c: 03 43                     NOP     
     0fd7e: ff 3f                     JMP     0xfd7e
+
+; NOP interrupt handlers
     0fd80: 00 13                     RETI    
     0fd82: 00 13                     RETI    
     0fd84: 00 13                     RETI    
@@ -705,11 +720,17 @@ static_constructors_table:
     0ffd8: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
     0ffdc: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
     0ffe0: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
-    0ffe4: 60 fd                     AND.B   @R13,   PC ; P1 interrupt -> fd60
-    0ffe6: f0 fa 86 fd               AND.B   @R10+,  0xfd6e ; faf0 fd86
-    0ffea: 80 fd ff ff               AND     R13,    0xffeb
-    0ffee: ff ff 84 fd               AND.B   @R15+,  0xfd84(R15) ; --> RETI
-    0fff2: 6c fd                     AND.B   @R13,   R12
-    0fff4: 88 fd ff ff               AND     R13,    0xffff(R8)
-    0fff8: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
-    0fffc: 82 fd f8 fc               AND     R13,    &0xfcf8 ; reset vector --> main (fcf8)
+    0ffe4: 60 fd  ; P1 interrupt -> fd60
+    0ffe6: f0 fa  ; P2 interrupt -> faf0
+    0ffe8: 86 fd  ; NOP USI_VECTOR
+    0ffea: 80 fd  ; NOP ADC10_VECTOR
+    0ffec: ff ff               
+    0ffee: ff ff 
+    0fff0: 84 fd  ; NOP  TIMERA1_VECTOR           
+    0fff2: 6c fd  ; TIMERA0_VECTOR --> fd6c
+    0fff4: 88 fd  ; NOP WDTIFG
+    0fff6: ff ff               
+    0fff8: ff ff 
+    0fffa: ff ff               
+    0fffc: 82 fd  ; NOP NMI
+    0fffe: f8 fc  ; RESET --> main fcf8
