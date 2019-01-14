@@ -1,0 +1,56 @@
+Ikea Ansluta Remote
+
+Based on spi example from GIT: msp430-spi-nrfreg
+
+Hardware Setup
+--------------
+
+The Ansluta remote consists of: MPS430G2231 MPU, CC2500 Transiver, LED, Key Switch
+
+MSP430       Device
+----------------------------------------
+     P1.0    LED
+RXD  P1.1    unused?
+TXD  P1.2    CC2500 CS
+     P1.3    CC2500 GDO0
+     P1.4    CC2500 GDO2
+SCLK P1.5    CC2500 SCLK
+SOMI P1.6    CC2500 SI
+SIMO P1.7    CC2500 SO
+     P2.6    unused (N-FET's Gate in transformer)
+     P2.7    Key (switch)
+
+Building
+--------
+
+This project is written for msp430-gcc on Linux with a regular makefile. 
+
+To build:
+
+make
+
+This builds the "firmware" in the "bin" subdirectory in various formats.
+
+
+Flashing
+------------
+
+To flash the firmware to your Launchpad through "mspdebug", you could use the "flash-target" make target:
+
+make flash-target
+
+
+Doxygen Docs
+------------
+
+If you installed doxygen on your system, you could generate the HTML-based documentation by calling:
+
+make gen-docs
+
+This will create the documentation under "doc/gen/html".
+
+
+Usage
+------------
+
+

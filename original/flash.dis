@@ -1,0 +1,639 @@
+MSPDebug version 0.25 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2017 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.13.0.601 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 006
+Initializing FET...
+FET protocol version is 30001000
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Using Olimex identification procedure
+Device ID: 0xf201
+  Code start address: 0xf800
+  Code size         : 2048 byte = 2 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x27f
+  RAM  size         : 128 byte = 0 kb
+Device: F20x2_G2x2x_G2x3x
+Number of breakpoints: 2
+Chip ID data:
+  ver_id:         01f2
+  ver_sub_id:     0000
+  revision:       40
+  fab:            40
+  self:           0000
+  config:         02
+  fuses:          00
+Device: F20x2_G2x2x_G2x3x
+0xf800:
+    0f800: 0a 12                     PUSH    R10
+    0f802: d2 b3 0e 02               BIT.B   #0x01,  &0x020e
+    0f806: 7d 24                     JZ      0xf902
+    0f808: d2 c3 0e 02               BIC.B   #0x01,  &0x020e
+    0f80c: f2 b0 80 ff 28 00         BIT.B   #0x80,  &0x0028
+    0f812: 03 20                     JNZ     0xf81a
+    0f814: 92 d3 10 02               BIS     #0x0001, &0x0210
+    0f818: 02 3c                     JMP     0xf81e
+    0f81a: 82 43 10 02               CLR     &0x0210
+    0f81e: 1f 42 14 02               MOV     &0x0214, R15
+    0f822: 1f e2 10 02               XOR     &0x0210, R15
+    0f826: 82 4f 12 02               MOV     R15,    &0x0212
+    0f82a: 92 42 10 02 14 02         MOV     &0x0210, &0x0214
+    0f830: 1f 42 12 02               MOV     &0x0212, R15
+    0f834: 1f c2 14 02               BIC     &0x0214, R15
+    0f838: 82 4f 16 02               MOV     R15,    &0x0216
+    0f83c: 92 b3 14 02               BIT     #0x0001, &0x0214
+    0f840: 0e 24                     JZ      0xf85e
+    0f842: b2 90 94 00 18 02         CMP     #0x0094, &0x0218
+    0f848: 0a 2c                     JC      0xf85e
+    0f84a: 92 53 18 02               INC     &0x0218
+    0f84e: b2 90 94 00 18 02         CMP     #0x0094, &0x0218
+    0f854: 04 20                     JNZ     0xf85e
+    0f856: e2 d3 0e 02               BIS.B   #0x02,  &0x020e
+    0f85a: f2 43 04 02               MOV.B   #0xff,  &0x0204
+    0f85e: 1f 42 14 02               MOV     &0x0214, R15
+    0f862: 1f f2 12 02               AND     &0x0212, R15
+    0f866: 1f b3                     BIT     #0x0001, R15
+    0f868: 25 24                     JZ      0xf8b4
+    0f86a: b2 90 94 00 18 02         CMP     #0x0094, &0x0218
+    0f870: 1f 2c                     JC      0xf8b0
+    0f872: 92 53 0c 02               INC     &0x020c
+    0f876: a2 92 0c 02               CMP     #0x0004, &0x020c
+    0f87a: 02 28                     JNC     0xf880
+    0f87c: 82 43 0c 02               CLR     &0x020c
+    0f880: 1f 42 0c 02               MOV     &0x020c, R15
+    0f884: 0f 93                     TST     R15
+    0f886: 0f 24                     JZ      0xf8a6
+    0f888: 1f 83                     DEC     R15
+    0f88a: 0a 24                     JZ      0xf8a0
+    0f88c: 1f 83                     DEC     R15
+    0f88e: 05 24                     JZ      0xf89a
+    0f890: 1f 83                     DEC     R15
+    0f892: 0c 20                     JNZ     0xf8ac
+    0f894: e2 43 04 02               MOV.B   #0x02,  &0x0204
+    0f898: 09 3c                     JMP     0xf8ac
+    0f89a: d2 43 04 02               MOV.B   #0x01,  &0x0204
+    0f89e: 06 3c                     JMP     0xf8ac
+    0f8a0: e2 43 04 02               MOV.B   #0x02,  &0x0204
+    0f8a4: 03 3c                     JMP     0xf8ac
+    0f8a6: f2 40 03 00 04 02         MOV.B   #0x03,  &0x0204
+    0f8ac: e2 d3 0e 02               BIS.B   #0x02,  &0x020e
+    0f8b0: 82 43 18 02               CLR     &0x0218
+    0f8b4: 5f 42 0e 02               MOV.B   &0x020e, R15
+    0f8b8: 0f 11                     RRA     R15
+    0f8ba: 1f b3                     BIT     #0x0001, R15
+    0f8bc: 1b 24                     JZ      0xf8f4
+    0f8be: e2 c3 0e 02               BIC.B   #0x02,  &0x020e
+    0f8c2: d2 c3 21 00               BIC.B   #0x01,  &0x0021
+    0f8c6: 4a 43                     CLR.B   R10
+    0f8c8: 7a 90 32 00               CMP.B   #0x32,  R10
+    0f8cc: 11 2c                     JC      0xf8f0
+    0f8ce: 3c 40 00 02               MOV     #0x0200, R12
+    0f8d2: 7d 40 06 00               MOV.B   #0x06,  R13
+    0f8d6: b0 12 a6 fa               CALL    #0xfaa6
+    0f8da: 0d 12                     PUSH    R13
+    0f8dc: 3d 40 f1 01               MOV     #0x01f1, R13
+    0f8e0: 1d 83                     DEC     R13
+    0f8e2: fe 23                     JNZ     0xf8e0
+    0f8e4: 3d 41                     POP     R13
+    0f8e6: 00 3c                     JMP     0xf8e8
+    0f8e8: 5a 53                     INC.B   R10
+    0f8ea: 7a 90 32 00               CMP.B   #0x32,  R10
+    0f8ee: ef 2b                     JNC     0xf8ce
+    0f8f0: d2 d3 21 00               BIS.B   #0x01,  &0x0021
+    0f8f4: 82 93 14 02               TST     &0x0214
+    0f8f8: 04 20                     JNZ     0xf902
+    0f8fa: 82 43 18 02               CLR     &0x0218
+    0f8fe: b2 d2 08 02               BIS     #0x0008, &0x0208
+    0f902: 3a 41                     POP     R10
+    0f904: 30 41                     RET     
+    0f906: b2 40 80 5a 20 01         MOV     #0x5a80, &0x0120
+    0f90c: f2 40 cc 00 57 00         MOV.B   #0xcc,  &0x0057
+    0f912: f2 40 68 00 56 00         MOV.B   #0x68,  &0x0056
+    0f918: f2 d0 20 00 53 00         BIS.B   #0x20,  &0x0053
+    0f91e: 4c 43                     CLR.B   R12
+    0f920: 3d 40 00 02               MOV     #0x0200, R13
+    0f924: 7e 40 06 00               MOV.B   #0x06,  R14
+    0f928: b0 12 74 fb               CALL    #0xfb74
+    0f92c: 0e 43                     CLR     R14
+    0f92e: f2 90 55 00 00 02         CMP.B   #0x55,  &0x0200
+    0f934: 01 24                     JZ      0xf938
+    0f936: 1e 43                     MOV     #0x0001, R14
+    0f938: 0f 43                     CLR     R15
+    0f93a: f2 90 aa 00 05 02         CMP.B   #0xaa,  &0x0205
+    0f940: 01 24                     JZ      0xf944
+    0f942: 1f 43                     MOV     #0x0001, R15
+    0f944: 0e df                     BIS     R15,    R14
+    0f946: 0e 93                     TST     R14
+    0f948: 1a 24                     JZ      0xf97e
+    0f94a: 5e 43                     MOV.B   #0x01,  R14
+    0f94c: 6e 92                     CMP.B   #0x04,  R14
+    0f94e: 08 2c                     JC      0xf960
+    0f950: b0 12 3a fb               CALL    #0xfb3a
+    0f954: 4f 4e                     MOV.B   R14,    R15
+    0f956: cf 4c 00 02               MOV.B   R12,    0x0200(R15)
+    0f95a: 5e 53                     INC.B   R14
+    0f95c: 6e 92                     CMP.B   #0x04,  R14
+    0f95e: f8 2b                     JNC     0xf950
+    0f960: f2 40 55 00 00 02         MOV.B   #0x55,  &0x0200
+    0f966: d2 43 01 02               MOV.B   #0x01,  &0x0201
+    0f96a: f2 40 aa 00 05 02         MOV.B   #0xaa,  &0x0205
+    0f970: 4c 43                     CLR.B   R12
+    0f972: 3d 40 00 02               MOV     #0x0200, R13
+    0f976: 7e 40 06 00               MOV.B   #0x06,  R14
+    0f97a: b0 12 84 f9               CALL    #0xf984
+    0f97e: d2 43 01 02               MOV.B   #0x01,  &0x0201
+    0f982: 30 41                     RET     
+    0f984: 0a 12                     PUSH    R10
+    0f986: 09 12                     PUSH    R9
+    0f988: 4b 4e                     MOV.B   R14,    R11
+    0f98a: 3f 40 40 00               MOV     #0x0040, R15
+    0f98e: 0f 8b                     SUB     R11,    R15
+    0f990: 4b 4c                     MOV.B   R12,    R11
+    0f992: 0b 9f                     CMP     R15,    R11
+    0f994: 2b 34                     JGE     0xf9ec
+    0f996: 32 c2                     DINT    
+    0f998: 03 43                     NOP     
+    0f99a: 39 40 40 10               MOV     #0x1040, R9
+    0f99e: 92 b3 2c 01               BIT     #0x0001, &0x012c
+    0f9a2: fd 23                     JNZ     0xf99e
+    0f9a4: b2 40 42 a5 2a 01         MOV     #0xa542, &0x012a
+    0f9aa: b2 40 02 a5 28 01         MOV     #0xa502, &0x0128
+    0f9b0: b2 40 00 a5 2c 01         MOV     #0xa500, &0x012c
+    0f9b6: c9 43 00 00               CLR.B   0x0000(R9)
+    0f9ba: b2 40 40 a5 28 01         MOV     #0xa540, &0x0128
+    0f9c0: 0b 43                     CLR     R11
+    0f9c2: 4f 4e                     MOV.B   R14,    R15
+    0f9c4: 0b 9f                     CMP     R15,    R11
+    0f9c6: 0b 2c                     JC      0xf9de
+    0f9c8: 0a 4b                     MOV     R11,    R10
+    0f9ca: 0a 5d                     ADD     R13,    R10
+    0f9cc: 4f 4c                     MOV.B   R12,    R15
+    0f9ce: 0f 5b                     ADD     R11,    R15
+    0f9d0: 0f 59                     ADD     R9,     R15
+    0f9d2: ef 4a 00 00               MOV.B   @R10,   0x0000(R15)
+    0f9d6: 1b 53                     INC     R11
+    0f9d8: 4f 4e                     MOV.B   R14,    R15
+    0f9da: 0b 9f                     CMP     R15,    R11
+    0f9dc: f5 2b                     JNC     0xf9c8
+    0f9de: b2 40 00 a5 28 01         MOV     #0xa500, &0x0128
+    0f9e4: b2 40 10 a5 2c 01         MOV     #0xa510, &0x012c
+    0f9ea: 32 d2                     EINT    
+    0f9ec: 30 40 5a fd               BR      #0xfd5a
+    0f9f0: 0a 12                     PUSH    R10
+    0f9f2: 09 12                     PUSH    R9
+    0f9f4: 3f 40 c8 fd               MOV     #0xfdc8, R15
+    0f9f8: 3f 90 c7 fd               CMP     #0xfdc7, R15
+    0f9fc: 19 28                     JNC     0xfa30
+    0f9fe: 3f 40 cc fd               MOV     #0xfdcc, R15
+    0fa02: 3f 90 c9 fd               CMP     #0xfdc9, R15
+    0fa06: 14 28                     JNC     0xfa30
+    0fa08: 3a 40 cc fd               MOV     #0xfdcc, R10
+    0fa0c: 3a 80 c8 fd               SUB     #0xfdc8, R10
+    0fa10: 3a 50 03 00               ADD     #0x0003, R10
+    0fa14: 0a 11                     RRA     R10
+    0fa16: 0a 11                     RRA     R10
+    0fa18: 39 40 c8 fd               MOV     #0xfdc8, R9
+    0fa1c: 3c 49                     MOV     @R9+,   R12
+    0fa1e: 7f 4c                     MOV.B   @R12+,  R15
+    0fa20: 4f 4f                     MOV.B   R15,    R15
+    0fa22: 0f 5f                     RLA     R15
+    0fa24: 1f 4f c6 fd               MOV     0xfdc6(R15), R15
+    0fa28: 3d 49                     MOV     @R9+,   R13
+    0fa2a: 8f 12                     CALL    R15
+    0fa2c: 1a 83                     DEC     R10
+    0fa2e: f6 23                     JNZ     0xfa1c
+    0fa30: 3f 40 00 00               CLR     R15
+    0fa34: 3f 90 00 00               TST     R15
+    0fa38: 08 24                     JZ      0xfa4a
+    0fa3a: 3a 40 00 00               CLR     R10
+    0fa3e: 02 3c                     JMP     0xfa44
+    0fa40: 3f 4a                     MOV     @R10+,  R15
+    0fa42: 8f 12                     CALL    R15
+    0fa44: 3a 90 00 00               TST     R10
+    0fa48: fb 23                     JNZ     0xfa40
+    0fa4a: 30 40 5a fd               BR      #0xfd5a
+    0fa4e: e2 d2 21 00               BIS.B   #0x04,  &0x0021
+    0fa52: f2 f0 df 00 21 00         AND.B   #0xdf,  &0x0021
+    0fa58: f2 f0 bf 00 21 00         AND.B   #0xbf,  &0x0021
+    0fa5e: 00 3c                     JMP     0xfa60
+    0fa60: 00 3c                     JMP     0xfa62
+    0fa62: 00 3c                     JMP     0xfa64
+    0fa64: 00 3c                     JMP     0xfa66
+    0fa66: 00 3c                     JMP     0xfa68
+    0fa68: e2 c2 21 00               BIC.B   #0x04,  &0x0021
+    0fa6c: e2 d2 21 00               BIS.B   #0x04,  &0x0021
+    0fa70: 0d 12                     PUSH    R13
+    0fa72: 3d 40 a4 00               MOV     #0x00a4, R13
+    0fa76: 1d 83                     DEC     R13
+    0fa78: fe 23                     JNZ     0xfa76
+    0fa7a: 3d 41                     POP     R13
+    0fa7c: 03 43                     NOP     
+    0fa7e: e2 c2 21 00               BIC.B   #0x04,  &0x0021
+    0fa82: f2 b0 80 ff 20 00         BIT.B   #0x80,  &0x0020
+    0fa88: fc 23                     JNZ     0xfa82
+    0fa8a: 7c 40 30 00               MOV.B   #0x30,  R12
+    0fa8e: b0 12 e4 fb               CALL    #0xfbe4
+    0fa92: f2 b0 80 ff 20 00         BIT.B   #0x80,  &0x0020
+    0fa98: fc 23                     JNZ     0xfa92
+    0fa9a: f2 f0 bf 00 21 00         AND.B   #0xbf,  &0x0021
+    0faa0: e2 d2 21 00               BIS.B   #0x04,  &0x0021
+    0faa4: 30 41                     RET     
+    0faa6: 0b 4c                     MOV     R12,    R11
+    0faa8: e2 c2 21 00               BIC.B   #0x04,  &0x0021
+    0faac: f2 b0 80 ff 20 00         BIT.B   #0x80,  &0x0020
+    0fab2: fc 23                     JNZ     0xfaac
+    0fab4: 7c 40 7f 00               MOV.B   #0x7f,  R12
+    0fab8: b0 12 e4 fb               CALL    #0xfbe4
+    0fabc: 0c 4d                     MOV     R13,    R12
+    0fabe: b0 12 e4 fb               CALL    #0xfbe4
+    0fac2: 4e 43                     CLR.B   R14
+    0fac4: 06 3c                     JMP     0xfad2
+    0fac6: 4f 4e                     MOV.B   R14,    R15
+    0fac8: 0f 5b                     ADD     R11,    R15
+    0faca: 6c 4f                     MOV.B   @R15,   R12
+    0facc: b0 12 e4 fb               CALL    #0xfbe4
+    0fad0: 5e 53                     INC.B   R14
+    0fad2: 4e 9d                     CMP.B   R13,    R14
+    0fad4: f8 2b                     JNC     0xfac6
+    0fad6: e2 d2 21 00               BIS.B   #0x04,  &0x0021
+    0fada: 7c 40 35 00               MOV.B   #0x35,  R12
+    0fade: b0 12 12 fd               CALL    #0xfd12
+    0fae2: f2 b2 20 00               BIT.B   #0x08,  &0x0020
+    0fae6: fd 27                     JZ      0xfae2
+    0fae8: f2 b2 20 00               BIT.B   #0x08,  &0x0020
+    0faec: fd 23                     JNZ     0xfae8
+    0faee: 30 41                     RET     
+    0faf0: 0f 12                     PUSH    R15
+    0faf2: 0e 12                     PUSH    R14
+    0faf4: 0d 12                     PUSH    R13
+    0faf6: 0c 12                     PUSH    R12
+    0faf8: 0b 12                     PUSH    R11
+    0fafa: c2 43 2b 00               CLR.B   &0x002b
+    0fafe: b1 c0 d0 00 0a 00         BIC     #0x00d0, 0x000a(SP)
+    0fb04: b2 b0 10 00 08 02         BIT     #0x0010, &0x0208
+    0fb0a: 09 20                     JNZ     0xfb1e
+    0fb0c: 7c 40 33 00               MOV.B   #0x33,  R12
+    0fb10: b0 12 12 fd               CALL    #0xfd12
+    0fb14: b0 12 48 fc               CALL    #0xfc48
+    0fb18: b2 d0 10 00 08 02         BIS     #0x0010, &0x0208
+    0fb1e: f2 d0 48 00 27 00         BIS.B   #0x48,  &0x0027
+    0fb24: b2 c2 08 02               BIC     #0x0008, &0x0208
+    0fb28: b2 40 d0 02 60 01         MOV     #0x02d0, &0x0160
+    0fb2e: 3b 41                     POP     R11
+    0fb30: 3c 41                     POP     R12
+    0fb32: 3d 41                     POP     R13
+    0fb34: 3e 41                     POP     R14
+    0fb36: 3f 41                     POP     R15
+    0fb38: 00 13                     RETI    
+    0fb3a: b2 40 70 18 b0 01         MOV     #0x1870, &0x01b0
+    0fb40: b2 40 00 10 b2 01         MOV     #0x1000, &0x01b2
+    0fb46: e2 d3 4a 00               BIS.B   #0x02,  &0x004a
+    0fb4a: b2 d0 03 00 b0 01         BIS     #0x0003, &0x01b0
+    0fb50: 7f 42                     MOV.B   #0x08,  R15
+    0fb52: 4f 93                     TST.B   R15
+    0fb54: 0c 24                     JZ      0xfb6e
+    0fb56: 92 d3 b0 01               BIS     #0x0001, &0x01b0
+    0fb5a: 92 b3 b2 01               BIT     #0x0001, &0x01b2
+    0fb5e: fd 23                     JNZ     0xfb5a
+    0fb60: 92 b3 b4 01               BIT     #0x0001, &0x01b4
+    0fb64: 01 24                     JZ      0xfb68
+    0fb66: 5c d3                     BIS.B   #0x01,  R12
+    0fb68: 4c 5c                     RLA.B   R12
+    0fb6a: 5f 83                     DEC.B   R15
+    0fb6c: f4 23                     JNZ     0xfb56
+    0fb6e: a2 c3 b0 01               BIC     #0x0002, &0x01b0
+    0fb72: 30 41                     RET     
+    0fb74: 0a 12                     PUSH    R10
+    0fb76: 09 12                     PUSH    R9
+    0fb78: 4b 4e                     MOV.B   R14,    R11
+    0fb7a: 3f 40 40 00               MOV     #0x0040, R15
+    0fb7e: 0f 8b                     SUB     R11,    R15
+    0fb80: 4b 4c                     MOV.B   R12,    R11
+    0fb82: 0b 9f                     CMP     R15,    R11
+    0fb84: 11 34                     JGE     0xfba8
+    0fb86: 3a 40 40 10               MOV     #0x1040, R10
+    0fb8a: 0b 43                     CLR     R11
+    0fb8c: 4f 4e                     MOV.B   R14,    R15
+    0fb8e: 0b 9f                     CMP     R15,    R11
+    0fb90: 0b 2c                     JC      0xfba8
+    0fb92: 4f 4c                     MOV.B   R12,    R15
+    0fb94: 0f 5b                     ADD     R11,    R15
+    0fb96: 0f 5a                     ADD     R10,    R15
+    0fb98: 09 4b                     MOV     R11,    R9
+    0fb9a: 09 5d                     ADD     R13,    R9
+    0fb9c: e9 4f 00 00               MOV.B   @R15,   0x0000(R9)
+    0fba0: 1b 53                     INC     R11
+    0fba2: 4f 4e                     MOV.B   R14,    R15
+    0fba4: 0b 9f                     CMP     R15,    R11
+    0fba6: f5 2b                     JNC     0xfb92
+    0fba8: 30 40 5a fd               BR      #0xfd5a
+    0fbac: d2 43 21 00               MOV.B   #0x01,  &0x0021
+    0fbb0: f2 40 65 00 22 00         MOV.B   #0x65,  &0x0022
+    0fbb6: c2 43 2a 00               CLR.B   &0x002a
+    0fbba: f2 43 2f 00               MOV.B   #0xff,  &0x002f
+    0fbbe: f2 40 80 00 29 00         MOV.B   #0x80,  &0x0029
+    0fbc4: c2 43 2e 00               CLR.B   &0x002e
+    0fbc8: c2 43 26 00               CLR.B   &0x0026
+    0fbcc: f2 d0 80 00 2d 00         BIS.B   #0x80,  &0x002d
+    0fbd2: f2 d0 80 00 2c 00         BIS.B   #0x80,  &0x002c
+    0fbd8: f2 f0 7f 00 2b 00         AND.B   #0x7f,  &0x002b
+    0fbde: d2 d3 21 00               BIS.B   #0x01,  &0x0021
+    0fbe2: 30 41                     RET     
+    0fbe4: 0f 43                     CLR     R15
+    0fbe6: 3f 92                     CMP     #0x0008, R15
+    0fbe8: 14 2c                     JC      0xfc12
+    0fbea: f2 f0 df 00 21 00         AND.B   #0xdf,  &0x0021
+    0fbf0: 7c b0 80 ff               BIT.B   #0x80,  R12
+    0fbf4: 04 20                     JNZ     0xfbfe
+    0fbf6: f2 f0 bf 00 21 00         AND.B   #0xbf,  &0x0021
+    0fbfc: 03 3c                     JMP     0xfc04
+    0fbfe: f2 d0 40 00 21 00         BIS.B   #0x40,  &0x0021
+    0fc04: 4c 5c                     RLA.B   R12
+    0fc06: f2 d0 20 00 21 00         BIS.B   #0x20,  &0x0021
+    0fc0c: 1f 53                     INC     R15
+    0fc0e: 3f 92                     CMP     #0x0008, R15
+    0fc10: ec 2b                     JNC     0xfbea
+    0fc12: f2 f0 df 00 21 00         AND.B   #0xdf,  &0x0021
+    0fc18: 30 41                     RET     
+    0fc1a: b0 12 4e fa               CALL    #0xfa4e
+    0fc1e: b0 12 a0 fc               CALL    #0xfca0
+    0fc22: b0 12 48 fc               CALL    #0xfc48
+    0fc26: 7c 40 3b 00               MOV.B   #0x3b,  R12
+    0fc2a: b0 12 12 fd               CALL    #0xfd12
+    0fc2e: 7c 40 3a 00               MOV.B   #0x3a,  R12
+    0fc32: b0 12 12 fd               CALL    #0xfd12
+    0fc36: 7c 40 33 00               MOV.B   #0x33,  R12
+    0fc3a: b0 12 12 fd               CALL    #0xfd12
+    0fc3e: 7c 40 36 00               MOV.B   #0x36,  R12
+    0fc42: b0 12 12 fd               CALL    #0xfd12
+    0fc46: 30 41                     RET     
+    0fc48: e2 c2 21 00               BIC.B   #0x04,  &0x0021
+    0fc4c: f2 b0 80 ff 20 00         BIT.B   #0x80,  &0x0020
+    0fc52: fc 23                     JNZ     0xfc4c
+    0fc54: 7c 40 7e 00               MOV.B   #0x7e,  R12
+    0fc58: b0 12 e4 fb               CALL    #0xfbe4
+    0fc5c: 0e 43                     CLR     R14
+    0fc5e: 3e 92                     CMP     #0x0008, R14
+    0fc60: 07 2c                     JC      0xfc70
+    0fc62: 5c 4e ba fd               MOV.B   0xfdba(R14), R12
+    0fc66: b0 12 e4 fb               CALL    #0xfbe4
+    0fc6a: 1e 53                     INC     R14
+    0fc6c: 3e 92                     CMP     #0x0008, R14
+    0fc6e: f9 2b                     JNC     0xfc62
+    0fc70: e2 d2 21 00               BIS.B   #0x04,  &0x0021
+    0fc74: 30 41                     RET     
+    0fc76: b2 b2 08 02               BIT     #0x0008, &0x0208
+    0fc7a: 03 20                     JNZ     0xfc82
+    0fc7c: 32 d0 18 00               BIS     #0x0018, SR
+    0fc80: 30 41                     RET     
+    0fc82: 7c 40 39 00               MOV.B   #0x39,  R12
+    0fc86: b0 12 12 fd               CALL    #0xfd12
+    0fc8a: b2 f0 ef ff 08 02         AND     #0xffef, &0x0208
+    0fc90: f2 f0 b7 00 27 00         AND.B   #0xb7,  &0x0027
+    0fc96: 82 43 60 01               CLR     &0x0160
+    0fc9a: 32 d0 d8 00               BIS     #0x00d8, SR
+    0fc9e: 30 41                     RET     
+    0fca0: 0e 43                     CLR     R14
+    0fca2: 3e 90 2f 00               CMP     #0x002f, R14
+    0fca6: 09 2c                     JC      0xfcba
+    0fca8: 4c 4e                     MOV.B   R14,    R12
+    0fcaa: 5d 4e 8a fd               MOV.B   0xfd8a(R14), R13
+    0fcae: b0 12 c0 fc               CALL    #0xfcc0
+    0fcb2: 1e 53                     INC     R14
+    0fcb4: 3e 90 2f 00               CMP     #0x002f, R14
+    0fcb8: f7 2b                     JNC     0xfca8
+    0fcba: d2 d3 1b 02               BIS.B   #0x01,  &0x021b
+    0fcbe: 30 41                     RET     
+    0fcc0: e2 c2 21 00               BIC.B   #0x04,  &0x0021
+    0fcc4: f2 b0 80 ff 20 00         BIT.B   #0x80,  &0x0020
+    0fcca: fc 23                     JNZ     0xfcc4
+    0fccc: b0 12 e4 fb               CALL    #0xfbe4
+    0fcd0: 0c 4d                     MOV     R13,    R12
+    0fcd2: b0 12 e4 fb               CALL    #0xfbe4
+    0fcd6: e2 d2 21 00               BIS.B   #0x04,  &0x0021
+    0fcda: 30 41                     RET     
+    0fcdc: b0 12 06 f9               CALL    #0xf906
+    0fce0: b0 12 ac fb               CALL    #0xfbac
+    0fce4: b0 12 28 fd               CALL    #0xfd28
+    0fce8: b0 12 1a fc               CALL    #0xfc1a
+    0fcec: 32 d2                     EINT    
+    0fcee: b0 12 00 f8               CALL    #0xf800
+    0fcf2: b0 12 76 fc               CALL    #0xfc76
+    0fcf6: fb 3f                     JMP     0xfcee
+    0fcf8: 31 40 7e 02               MOV     #0x027e, SP
+    0fcfc: b0 12 78 fd               CALL    #0xfd78
+    0fd00: 0c 93                     TST     R12
+    0fd02: 02 24                     JZ      0xfd08
+    0fd04: b0 12 f0 f9               CALL    #0xf9f0
+    0fd08: 0c 43                     CLR     R12
+    0fd0a: b0 12 dc fc               CALL    #0xfcdc
+    0fd0e: b0 12 7c fd               CALL    #0xfd7c
+    0fd12: e2 c2 21 00               BIC.B   #0x04,  &0x0021
+    0fd16: f2 b0 80 ff 20 00         BIT.B   #0x80,  &0x0020
+    0fd1c: fc 23                     JNZ     0xfd16
+    0fd1e: b0 12 e4 fb               CALL    #0xfbe4
+    0fd22: e2 d2 21 00               BIS.B   #0x04,  &0x0021
+    0fd26: 30 41                     RET     
+    0fd28: b2 40 10 00 62 01         MOV     #0x0010, &0x0162
+    0fd2e: b2 40 10 27 72 01         MOV     #0x2710, &0x0172
+    0fd34: b2 40 d0 02 60 01         MOV     #0x02d0, &0x0160
+    0fd3a: 30 41                     RET     
+    0fd3c: 1f 4c 01 00               MOV     0x0001(R12), R15
+    0fd40: 0f 93                     TST     R15
+    0fd42: 05 24                     JZ      0xfd4e
+    0fd44: 1d 53                     INC     R13
+    0fd46: cd 43 ff ff               CLR.B   0xffff(R13)
+    0fd4a: 1f 83                     DEC     R15
+    0fd4c: fb 23                     JNZ     0xfd44
+    0fd4e: 30 41                     RET     
+    0fd50: 34 41                     POP     R4
+    0fd52: 35 41                     POP     R5
+    0fd54: 36 41                     POP     R6
+    0fd56: 37 41                     POP     R7
+    0fd58: 38 41                     POP     R8
+    0fd5a: 39 41                     POP     R9
+    0fd5c: 3a 41                     POP     R10
+    0fd5e: 30 41                     RET     
+    0fd60: b1 c0 d0 00 00 00         BIC     #0x00d0, 0x0000(SP)
+    0fd66: c2 43 23 00               CLR.B   &0x0023
+    0fd6a: 00 13                     RETI    
+    0fd6c: b1 c0 10 00 00 00         BIC     #0x0010, 0x0000(SP)
+    0fd72: d2 d3 0e 02               BIS.B   #0x01,  &0x020e
+    0fd76: 00 13                     RETI    
+    0fd78: 1c 43                     MOV     #0x0001, R12
+    0fd7a: 30 41                     RET     
+    0fd7c: 03 43                     NOP     
+    0fd7e: ff 3f                     JMP     0xfd7e
+    0fd80: 00 13                     RETI    
+    0fd82: 00 13                     RETI    
+    0fd84: 00 13                     RETI    
+    0fd86: 00 13                     RETI    
+    0fd88: 00 13                     RETI    
+    0fd8a: 29 2e                     JC      0xf9de
+    0fd8c: 06 07                     MOVA    @R7,    R6
+    0fd8e: d3 91 ff 04 05 01         CMP.B   0x04ff(SP), 0x0105(R3)
+    0fd94: 10 09                     BRA     @R9+
+    0fd96: 00 5d                     ADD     R13,    PC
+    0fd98: 93 b1 4d 3b 73 a2         BIT     0x3b4d(SP), 0xa273(R3)
+    0fd9e: f8 01                     SUBA    SP,     R8
+    0fda0: 07 30                     JN      0xfdb0
+    0fda2: 18 1d 1c c7 00 b2         BICX.?  0xab200(R7), R12
+    0fda8: 87 6b f8 b6               ADDC    R11,    0xb6f8(R7)
+    0fdac: 10 ea 0a 00               XOR     0x000a(R10), PC
+    0fdb0: 11 41 00 59               MOV     0x5900(SP), SP
+    0fdb4: 7f 3f                     JMP     0xfcb4
+    0fdb6: 88 31                     JN      0x100c8
+    0fdb8: 0b 00                     MOVA    @PC,    R11
+    0fdba: fe 00                     SUBA    PC,     R14
+    0fdbc: 00 00                     BRA     @PC
+    0fdbe: 00 00                     BRA     @PC
+    0fdc0: 00 00                     BRA     @PC
+    0fdc2: 00 00                     BRA     @PC
+    0fdc4: 1f 00                     MOVA    @PC+,   R15
+    0fdc6: 3c fd                     AND     @R13+,  R12
+    0fdc8: c2 fd 00 02               AND.B   R13,    &0x0200
+    0fdcc: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fdd0: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fdd4: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fdd8: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fddc: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fde0: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fde4: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fde8: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fdec: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fdf0: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fdf4: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fdf8: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fdfc: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe00: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe04: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe08: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe0c: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe10: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe14: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe18: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe1c: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe20: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe24: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe28: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe2c: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe30: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe34: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe38: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe3c: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe40: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe44: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe48: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe4c: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe50: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe54: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe58: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe5c: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe60: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe64: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe68: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe6c: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe70: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe74: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe78: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe7c: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe80: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe84: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe88: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe8c: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe90: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe94: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe98: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fe9c: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fea0: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fea4: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fea8: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0feac: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0feb0: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0feb4: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0feb8: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0febc: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fec0: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fec4: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fec8: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fecc: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fed0: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fed4: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fed8: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fedc: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fee0: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fee4: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fee8: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0feec: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fef0: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fef4: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fef8: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fefc: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff00: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff04: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff08: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff0c: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff10: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff14: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff18: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff1c: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff20: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff24: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff28: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff2c: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff30: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff34: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff38: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff3c: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff40: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff44: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff48: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff4c: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff50: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff54: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff58: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff5c: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff60: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff64: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff68: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff6c: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff70: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff74: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff78: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff7c: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff80: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff84: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff88: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff8c: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff90: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff94: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff98: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ff9c: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ffa0: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ffa4: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ffa8: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ffac: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ffb0: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ffb4: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ffb8: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ffbc: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ffc0: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ffc4: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ffc8: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ffcc: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ffd0: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ffd4: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ffd8: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ffdc: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ffe0: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0ffe4: 60 fd                     AND.B   @R13,   PC
+    0ffe6: f0 fa 86 fd               AND.B   @R10+,  0xfd6e
+    0ffea: 80 fd ff ff               AND     R13,    0xffeb
+    0ffee: ff ff 84 fd               AND.B   @R15+,  0xfd84(R15)
+    0fff2: 6c fd                     AND.B   @R13,   R12
+    0fff4: 88 fd ff ff               AND     R13,    0xffff(R8)
+    0fff8: ff ff ff ff               AND.B   @R15+,  0xffff(R15)
+    0fffc: 82 fd f8 fc               AND     R13,    &0xfcf8
