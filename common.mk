@@ -13,7 +13,7 @@ LD			 = $(PREFIX)gcc
 OBJCOPY		 = $(PREFIX)objcopy
 OBJDUMP		 = $(PREFIX)objdump
 
-INCDIR		+= -I./include 
+INCDIR		+= -I.
 CFLAGS		+= -Os -mmcu=$(MCU) -g -Wall -Wextra $(INCDIR) -std=c99
 
 LIBDIR		 =  
@@ -83,7 +83,7 @@ images: $(BINARY).images
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 SRC = $(wildcard *.c)
-HDR = $(wildcard include/*.h)
+HDR = $(wildcard *.h)
 
 style: 
 	$(STYLER) $(STYLERFLAGS) $(SRC) 

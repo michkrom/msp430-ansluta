@@ -54,9 +54,11 @@ flash-target: target
 check-target:
 	mspdebug rf2500 "exit"
 
-debug-target:
+debug-target: target
 	mspdebug rf2500
 
+size: target
+	size  bin/firmware.elf
 clean: 
 	make -C $(SRCDIR) clean
 	rm -fr doc/gen	
