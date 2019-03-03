@@ -1,11 +1,14 @@
-Ikea Ansluta Remote
-
-Based on spi example from GIT: msp430-spi-nrfreg
+Ikea Ansluta Remote Hacking
+===========================
 
 At this point the project is at 'bang on the pipes' stage (ie it flashes the LED).
 
-Hardware Setup
---------------
+There is a dump of original FW and annotated disassembly as described here:
+https://minkbot.blogspot.com/2019/01/ikea-ansluta-hacking-reverse.html
+
+
+Hardware
+--------
 
 The Ansluta remote consists of: MPS430G2231 MPU, CC2500 Transiver, LED, Key Switch
 
@@ -21,6 +24,10 @@ SOMI P1.6    CC2500 SI
 SIMO P1.7    CC2500 SO
      P2.6    unused (N-FET's Gate in transformer)
      P2.7    Key (switch)
+
+Target control achieved via MSP430 Launchpad, see:
+https://minkbot.blogspot.com/2019/01/ikea-ansluta-hacking-system-via-tis.html
+
 
 Building
 --------
@@ -41,11 +48,11 @@ To check connection
 
 make check-target
 
-To flash the firmware to your Launchpad through "mspdebug", you could use the "flash-target" make target:
+To flash the firmware to your Launchpad through "mspdebug", you could use the "flash-target" make target (makes the target beforehand)
 
 make flash-target
 
-To start mspdebug 
+To start mspdebug
 
 make debug-target
 
@@ -60,5 +67,6 @@ make gen-docs
 This will create the documentation under "doc/gen/html".
 
 
-
-
+Credits
+-------
+Based on spi example from GIT: msp430-spi-nrfreg
