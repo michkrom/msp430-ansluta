@@ -2,6 +2,8 @@ Ikea Ansluta Remote
 
 Based on spi example from GIT: msp430-spi-nrfreg
 
+At this point the project is at 'bang on the pipes' stage (ie it flashes the LED).
+
 Hardware Setup
 --------------
 
@@ -32,12 +34,20 @@ make
 This builds the "firmware" in the "bin" subdirectory in various formats.
 
 
-Flashing
-------------
+Target Operations
+-----------------
+
+To check connection
+
+make check-target
 
 To flash the firmware to your Launchpad through "mspdebug", you could use the "flash-target" make target:
 
 make flash-target
+
+To start mspdebug 
+
+make debug-target
 
 
 Doxygen Docs
@@ -50,7 +60,5 @@ make gen-docs
 This will create the documentation under "doc/gen/html".
 
 
-Usage
-------------
 
 
