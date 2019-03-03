@@ -1,0 +1,17 @@
+{
+    "configurations": [
+        {
+            "name": "msp430",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/usr/msp430/include/**"
+            ],
+            "defines": ["__MSP430G2231__"],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}
