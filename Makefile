@@ -11,7 +11,7 @@ VERSION		= 0.1
 TARGET		= msp430_ansluta_v$(VERSION)
 MCU			= msp430g2231
 
-all: target
+all: target size
 
 world: target gen-docs
 
@@ -59,6 +59,7 @@ debug-target: target
 
 size: target
 	size  bin/firmware.elf
+
 clean: 
 	make -C $(SRCDIR) clean
 	rm -fr doc/gen	
