@@ -51,6 +51,12 @@ deploy: deploy-src deploy-bin
 flash-target: target
 	mspdebug rf2500 "prog ./bin/firmware.elf"
 
+check-target:
+	mspdebug rf2500 "exit"
+
+debug-target:
+	mspdebug rf2500
+
 clean: 
 	make -C $(SRCDIR) clean
 	rm -fr doc/gen	

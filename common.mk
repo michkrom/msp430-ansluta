@@ -14,7 +14,7 @@ OBJCOPY		 = $(PREFIX)objcopy
 OBJDUMP		 = $(PREFIX)objdump
 
 INCDIR		+= -I./include 
-CFLAGS		+= -Os -mmcu=$(MCU) -g -Wall -Wextra $(INCDIR) 
+CFLAGS		+= -Os -mmcu=$(MCU) -g -Wall -Wextra $(INCDIR) -std=c99
 
 LIBDIR		 =  
 LIBS		 =  
