@@ -18,6 +18,7 @@
  */
 
 #include <msp430.h>
+#include <stdint.h>
 
 /*
 
@@ -54,12 +55,14 @@ note - since the P1.6 and P1.7 are swapped (hw desin error likely) we cannot use
 // P2
 #define P_KEY  BIT7
 
-#define LED(v) if(v) P1OUT |= P_LED; else P1OUT &= ~P_LED;
-#define CS(v) if(v) P1OUT |= P_CS; else P1OUT &= ~P_CS;
-#define SCLK(v) if(v) P1OUT |= P_SCLK; else P1OUT &= ~P_SCLK;
-#define MOSI(v) if(v) P1OUT |= P_MOSI; else P1OUT &= ~P_MOSI;
+#define LED(v) P1OUT = v ? (P1OUT | P_LED) : (P1OUT & ~P_LED);
+#define CS(v) P1OUT = v ? (P1OUT | P_CS) : (P1OUT & ~P_CS);
+#define SCLK(v) P1OUT = v ? (P1OUT | P_SCLK) : (P1OUT & ~P_SCLK);
+#define MOSI(v) P1OUT = v ? (P1OUT | P_MOSI) : (P1OUT & ~P_MOSI);
 #define KEY() (P2IN & P_KEY)
 #define MISO() (P1IN & P_MISO)
+
+#define DELAYLOOP(count) for(uint16_t cnt = 0; cnt < count; ++cnt) __asm__("");
 
 /**
  * Main routine
@@ -78,15 +81,20 @@ int main(void)
 	P2DIR = 0;    // P2 is all in
 	P2REN = 0xff; // resistors enable - all
 	P2OUT = 0xff; // pull up - all
-	P2SEL = 0;  // select special io functions - normal io
+	P2SEL = 0;    // select special io functions - normal io
 	
 	// enable interrupt for key switch
 	P2IFG = 0; // clear flags
 	P2IE = P_KEY; // enable
 	P2IES = P_KEY; // edge
 
-	// set LED pin
-	LED(1);
+	while(1)
+	{
+		LED(1);
+		DELAYLOOP(0xFFFF)
+		LED(0);
+		DELAYLOOP(0xFFFF)
+	}
  
 	// hang, not exit
     while(1);
