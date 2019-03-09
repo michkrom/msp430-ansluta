@@ -46,15 +46,19 @@ Target Operations
 
 To check connection
 
-make check-target
+make target-check
 
 To flash the firmware to your Launchpad through "mspdebug", you could use the "flash-target" make target (makes the target beforehand)
 
-make flash-target
+make target-flash
 
-To start mspdebug
+To connect to target and start debugging with gdb
 
-make debug-target
+make target-debug
+
+To start mspdebug target server so debugging from VSCode can be achived
+
+make target-startdebug
 
 
 Doxygen Docs
@@ -69,4 +73,5 @@ This will create the documentation under "doc/gen/html".
 
 Credits
 -------
+
 Based on spi example from GIT: msp430-spi-nrfreg

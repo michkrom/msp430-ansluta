@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
+            "label": "Build",
             "type": "shell",
             "command": "make",
             "problemMatcher": [
@@ -16,21 +16,27 @@
             }
         },
         {
-            "label": "flash",
+            "label": "Flash",
             "type": "shell",
-            "command": "make flash-target",
+            "command": "make && skill mspdebug && make flash-target",
+            "problemMatcher": [
+                "$gcc"
+            ],
             "group": {
                 "kind": "test",
                 "isDefault": true
             }
         },
         {
-            "label": "debug",
+            "label": "Start Debug Server",
             "type": "shell",
-            "command": "make debug-target",
+            "-command": "echo starting mspdebug && skill mspdebug && nohup mspdebug rf2500 gdb &",
+            "-command": "echo starting mspdebug && mspdebug rf2500 gdb & ps -A|grep msp",
+            "-command": "skill mspdebug && nohup mspdebug rf2500 gdb &> \"$TEMP_LOG_FILE\" & tail -f \"$TEMP_LOG_FILE\" &",
+            "command": "/bin/sh -c `skill mspdebug && mspdebug rf2500 gdb &`",
             "group": {
                 "kind": "test",
-                "isDefault": true
+                "isDefault": false
             }
         }
     ]

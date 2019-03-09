@@ -48,17 +48,22 @@ deploy-bin: clean target
 	
 deploy: deploy-src deploy-bin
 
-flash-target: target
-	mspdebug rf2500 "prog ./bin/firmware.elf"
-
-check-target:
-	mspdebug rf2500 "exit"
-
-debug-target: target
-	mspdebug rf2500
-
 size: target
 	size  bin/firmware.elf
+
+target-check:
+	mspdebug rf2500 "exit"
+
+target-flash: target
+	mspdebug rf2500 "prog ./bin/firmware.elf"
+
+target-startdebug: target
+	skill mspdebug 
+	mspdebug rf2500 "gdb"
+
+target-debug:
+	make target-startdebug &
+	msp430-gdb bin/firmware.elf -ex "target remote :2000"
 
 clean: 
 	make -C $(SRCDIR) clean
